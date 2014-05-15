@@ -78,6 +78,21 @@ var sokkit = new Sokkit({
 });
 ```
 
+Additionally, you can specify an array of alternate paths, and even include the
+default by specifying `$DEFAULT` within the array:
+
+``` JS
+var dirname = require('path').dirname;
+
+var sokkit = new Sokkit({
+	path: [
+		dirname(require.main.filename) + '/plugins',
+		dirname(require.main.filename) + '/extras',
+		'$DEFAULT'
+	]
+});
+
+
 Or override the plugin naming pattern, by supplying a
 [glob](https://github.com/isaacs/node-glob) compatible pattern.
 
