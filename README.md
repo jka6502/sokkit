@@ -56,7 +56,7 @@ Actual plugin load failures, however, populate the `failed` array property with
 objects containing `module` and `error` keys.
 
 ``` JS
-if (socket.failed.length) {
+if (sokkit.failed.length) {
 	console.log("The following plugins failed to load:\n",
 		sokkit.failed.map(function(fail) {
 			return '   ' + fail.module + ': ' + fail.error;
