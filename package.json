@@ -1,0 +1,24 @@
+{
+  "name": "sokkit",
+  "preferGlobal": false,
+  "version": "0.1.0",
+  "author": "James Andrews <jka6502@gmail.com>",
+  "description": "an npm submodule plugin handler",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jka6502/sokkit.git"
+  },
+  "main": "lib/sokkit.js",
+  "keywords": [
+    "npm",
+    "plugin"
+  ],
+  "dependencies": {
+    "glob": "^3.2.9"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.6"
+  }
+}
