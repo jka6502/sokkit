@@ -115,6 +115,11 @@ var group = sokkit.subset(function(module, plugin) {
 
 Subsets do not retain the `failed` properties of their parents.
 
+Subsets are also independent plugin lists, they reference the same exports, but
+are unique sets in their own right.  This means you can `load` plugins, create
+two subsets, run `instantiate` on each, and maintain two completely independent
+sets of plugin instances.
+
 If you need access to the actual module names, you can use the `modules`
 property:
 
