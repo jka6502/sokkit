@@ -172,6 +172,40 @@ passed as an array:
 sokkit.apply('init', [this, config.plugin]);
 ```
 
+## Plugin naming
+
+Plugins have a *module* name associated, which can be used to reference them
+when validating dependencies, enabling, disabling, or accessing via
+`sokkit.modules[name]`.
+
+The name is automatically assigned during discovery from the module directory
+name, or direct script filename matched by the discovery pattern.
+
+In order to maintain consistency, and prevent app-name-soup, the following
+transformations occur when a plugin is discovered.
+
+If the plugin is contained in a single script file, the `.js` extension is
+removed.
+
+If the plugin is discovered in a module called `appname-pluginname` then the
+`appname-` prefix is removed, so an application using the following plugins:
+
+```
+	application-plugin1
+	application-plugin2
+
+	./components/feature1.js
+	./components/feature2.js
+```
+
+Will have the following plugins:
+```
+	plugin1
+	plugin2
+	feature1
+	feature2
+```
+
 ## Subsets
 
 You should, however, not manipulate the contents directly, or use `slice()` to
