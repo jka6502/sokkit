@@ -109,6 +109,15 @@ var sokkit = new Sokkit({
 });
 ```
 
+Additionally, plugins can be prevented from loading at all, by supplying a
+`disable` array during construction:
+
+``` JS
+var sokkit = new Sokkit({
+	disable: ['plugin1', 'plugin2']
+});
+```
+
 ## Usage
 
 The `Sokkit` instance is actually an array.  Once `load` has returned (in
@@ -218,6 +227,9 @@ sokkit.enable(module);
 Diabled plugins will no longer appear in the `sokkit` array, the `modules`
 property, appear in any `subset`s or be affected by `call`, `apply`, or
 `instantiate`.
+
+Plugins disabled during construction, and thereby never actually loaded can be
+enabled, just like any other plugin.
 
 ## Plugin dependency management
 
