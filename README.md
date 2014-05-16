@@ -5,8 +5,17 @@
 A simple, unopinionated plugin handler for npm modules.
 
 Discover, load, instantiate and/or execute methods on all of your plugins with
-ease - Just decide on a suitable pattern, or use the `mymodule-pluginname`
+ease - Just decide on a suitable file pattern, or use the `mymodule-pluginname`
 default, and away you go!
+
+	* [Installation](#installation)
+	* [Configuration](#configuration)
+	* [Usage](#usage)
+	* [Subsets](#subsets)
+	* [Instanced plugins](#instanced-plugins)
+	* [Enabling and disabling](#enabling-and-disabling)
+	* [Plugin dependency management](#plugin-dependency-management)
+	* [So, how does this help me?](#so-how-does-this-help-me)
 
 ## Installation
 
@@ -115,24 +124,6 @@ sokkit.forEach(function(plugin) {
 });
 ```
 
-You should, however, not manipulate the contents directly, or use `slice()` to
-obtain a subset of plugins.  Instead, use `subset`, and supply an *optional*
-function to filter that set, which will result in an appropriate subset of
-modules.
-
-``` JS
-var group = sokkit.subset(function(module, plugin) {
-	return plugin.isGroupMember || module.indexOf('group_name');
-});
-```
-
-Subsets do not retain the `failed` properties of their parents.
-
-Subsets are also independent plugin lists, they reference the same exports, but
-are unique sets in their own right.  This means you can `load` plugins, create
-two subsets, run `instantiate` on each, and maintain two completely independent
-sets of plugin instances.
-
 If you need access to the actual module names, you can use the `modules`
 property:
 
@@ -147,7 +138,7 @@ for(var module in modules) {
 
 Sokkit is not opinionated, there is no enforced design on your plugin structure.
 How your plugins interact with your application is left to the developer's
-discretion, but three methods are supplied to assist in those interactions.
+discretion, but several methods are supplied to assist in those interactions.
 
 The `call` method invokes the `method` supplied on every succesfully loaded
 plugin with the remaining paramters:
@@ -172,18 +163,45 @@ passed as an array:
 sokkit.apply('init', [this, config.plugin]);
 ```
 
+## Subsets
+
+You should, however, not manipulate the contents directly, or use `slice()` to
+obtain a subset of plugins.  Instead, use `subset`, and supply an *optional*
+function to filter that set, which will result in an appropriate subset of
+modules.
+
+``` JS
+var group = sokkit.subset(function(module, plugin) {
+	return plugin.isGroupMember || module.indexOf('group_name');
+});
+```
+
+Subsets do not retain the `failed` properties of their parents.
+
+Subsets are also independent plugin lists, they reference the same exports, but
+are unique sets in their own right.  This means you can `load` plugins, create
+two subsets, run `instantiate` on each, and maintain two completely independent
+sets of plugin instances.
+
 ## Instanced plugins
 
-If you prefer modular plugins, the final helper function, `instantiate` can be
-used to treat each plugin as a constructor, and instantiate instances from each
+If you prefer modular plugins, the helper function, `instantiate` can be
+used to treat each plugin as a constructor, and instantiate those those objects
 with the parameters supplied.
 
 ``` JS
 var errors = sokkit.instantiate(this);
+
+// The equivalent of:
+//	sokkit[0] = new sokkit[0](this);
+//	sokkit[1] = new sokkit[1](this);
+//	...
 ```
 
 The returned array will contain objects with `module` and `error` properties,
 listing any plugins that threw exceptions while being instantiated.
+
+## Enabling and disabling
 
 If a plugin misbehaves, or is not required, it can be disabled:
 
@@ -201,11 +219,27 @@ Diabled plugins will no longer appear in the `sokkit` array, the `modules`
 property, appear in any `subset`s or be affected by `call`, `apply`, or
 `instantiate`.
 
+## Plugin dependency management
+
+In order to remain unopinionated, there is no enforced method of dependency
+management between plugins, but there is a helper function to simplify the task,
+should you need it.
+
+Create a `retrieve` callback to return an array of dependencies for any given
+plugin, and pass it to the `depend` method to automatically verify dependencies,
+disabling any plugins that have not had their dependencies satisfied.
+
+Additionally, this method will return the, now familiar, error array describing
+any plugins that have been disabled due to a dependency failure.
+
+``` JS
+var errors = sokkit.depend(function(module, plugin) { return plugin.requires; });
+```
+
 ## So, how does this help me?
 
 Well, it means you can pick a naming scheme, and automatically discover and
-work with plugins, as long as they implement that naming scheme, and your chosen
-plugin API.
+work with plugins, using whatever actual plugin API you prefer.
 
 This, in turn, means that your users can, for instance:
 
@@ -215,7 +249,9 @@ npm install yourmodule-plugin1
 npm install yourmodule-plugin2
 ```
 
-and have those plugins working automatically, right out of the box.
+and have those plugins working automatically, right out of the box.  No
+configuration, or editing of `package.json` files to enable them, or ensure
+they are loaded/linked correctly.
 
 Alternatively, developers that depend on your module can do exactly the same,
 but by specifying plugins as dependencies too, in their `package.json`:
@@ -234,7 +270,30 @@ but by specifying plugins as dependencies too, in their `package.json`:
 	]
 }
 ```
-And, when they access your module, the plugins will be available too.
+And, when they access your module, the plugins will be available too - all
+automatically discovered, loaded and ready to use.
+
+Personally, I like to use this as an automatic aggregator for components within
+my own software too - use an array of paths, including some way of picking up
+internal *modules*.
+
+``` js
+	function MyAPI() {
+		this.plugins = new Sokkit({
+			path: [
+				// Internal component path
+				dirname(require.main.filename) . '/components/**/*.js',
+				// External plugin path
+				'$DEFAULT'
+			]
+		}).load();
+	}
+```
+
+This style not only allows you to make every component of your system an
+effective example plugin, but also forces you, the developer, to consider
+encapsulation and separation of concerns within your architecture - and in turn
+consider your plugin API, its usability, scalability, etc, from the outset.
 
 ## Finally
 
