@@ -1,7 +1,7 @@
 {
   "name": "sokkit",
   "preferGlobal": false,
-  "version": "0.2.3",
+  "version": "0.3.0",
   "author": "James Andrews <jka6502@gmail.com>",
   "description": "an npm submodule plugin handler",
   "scripts": {},

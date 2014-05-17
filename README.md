@@ -43,7 +43,7 @@ by supplying a `module` option.
 var sokkit = new Sokkit({ module: 'mymodule' });
 ```
 
-Call the `load()` method to discover, and load any plugin modules.
+Call the `load()` method to discover, and load any plugins.
 
 ``` JS
 var plugins = sokkit.load();
@@ -62,20 +62,21 @@ synchronous mode, or pass the `error` parameter to the `callback` supplied in
 asynchronous mode.
 
 Actual plugin load failures, however, populate the `failed` array property with
-objects containing `module` and `error` keys.
+objects containing `name` and `error` keys.
 
 ``` JS
 if (sokkit.failed.length) {
 	console.log("The following plugins failed to load:\n",
 		sokkit.failed.map(function(fail) {
-			return '   ' + fail.module + ': ' + fail.error;
+			return '   ' + fail.name + ': ' + fail.error;
 		}).join('\n')
 	);
 }
 ```
 
 By default Sokkit will search the same `node_modules` directory that your module
-resides in for any modules named `yourmodule-*`, and attempt to `require` them.
+resides in for any other modules named `yourmodule-*`, and attempt to `require`
+them.
 
 You can override the search directory by supplying a `path` option:
 
@@ -100,7 +101,7 @@ var sokkit = new Sokkit({
 });
 ```
 
-Or override the plugin naming pattern, by supplying a
+Or override the plugin file naming pattern, by supplying a
 [glob](https://github.com/isaacs/node-glob) compatible pattern.
 
 ``` JS
@@ -110,7 +111,8 @@ var sokkit = new Sokkit({
 ```
 
 Additionally, plugins can be prevented from loading at all, by supplying a
-`disable` array during construction:
+`disable` array during construction, and supplying the names of plugins to
+prevent:
 
 ``` JS
 var sokkit = new Sokkit({
@@ -122,7 +124,7 @@ var sokkit = new Sokkit({
 
 The `Sokkit` instance is actually an array.  Once `load` has returned (in
 synchronous mode), or the supplied `callback` has been called (in asynchronous
-mode), it will contain the `module.exports` of all plugin modules found.
+mode), it will contain the `module.exports` of all plugins found.
 
 From there, you can iterate over the loaded plugins, as you would with any
 other array:
@@ -133,15 +135,18 @@ sokkit.forEach(function(plugin) {
 });
 ```
 
-If you need access to the actual module names, you can use the `modules`
+Or use `Array` functions, such as `map`, `filter`, `join`, to perform operations
+or aggregate information about your loaded plugins.
+
+If you need access to the actual plugin names, you can use the `plugins`
 property:
 
 ``` JS
-var modules = sokkit.modules;
-for(var module in modules) {
-	if (!modules.hasOwnProperty(module)) { continue; }
-	var plugin = modules[module];
-	// ... do something with module and plugin ...
+var plugins = sokkit.plugins;
+for(var name in plugins) {
+	if (!plugins.hasOwnProperty(name)) { continue; }
+	var plugin = plugins[name];
+	// ... do something with name and plugin ...
 }
 ```
 
@@ -150,7 +155,7 @@ How your plugins interact with your application is left to the developer's
 discretion, but several methods are supplied to assist in those interactions.
 
 The `call` method invokes the `method` supplied on every succesfully loaded
-plugin with the remaining paramters:
+plugin with the remaining parameters:
 
 ``` JS
 sokkit.call('init', this, config.plugin);
@@ -162,7 +167,7 @@ The `call` method will return an array, containing the return values of every
 successful call made.
 
 An additional property on the returned array, `errors` will contain objects with
-`module` and `error` properties, describing details of any plugins that threw
+`name` and `error` properties, describing details of any plugins that threw
 exceptions while processing the request.
 
 The `apply` method works exactly the same as `call`, except the arguments are
@@ -174,9 +179,9 @@ sokkit.apply('init', [this, config.plugin]);
 
 ## Plugin naming
 
-Plugins have a *module* name associated, which can be used to reference them
-when validating dependencies, enabling, disabling, or accessing via
-`sokkit.modules[name]`.
+Plugins have a name associated, which can be used to reference them when
+validating dependencies, enabling, disabling, or accessing via
+`sokkit.plugins[name]`.
 
 The name is automatically assigned during discovery from the module directory
 name, or direct script filename matched by the discovery pattern.
@@ -188,36 +193,36 @@ If the plugin is contained in a single script file, the `.js` extension is
 removed.
 
 If the plugin is discovered in a module called `application-pluginname`, or a
-filename `application-plugin` then the `application-` prefix is removed, so an
-application using the following plugins:
+file named `application-plugin.js` then the `application-` prefix is removed, so
+an application using the following plugins:
 
-```
+`
 	node_modules/application-plugin1/
 	node_modules/application-plugin2/
 
 	./components/feature1.js
 	./components/application-feature2.js
-```
+`
 
 Will have the following plugins:
-```
+`
 	plugin1
 	plugin2
 	feature1
 	feature2
-```
+`
 
 ## Subsets
 
-The Sokkit instance is an array.  You should, however, not manipulate the
+The `Sokkit` instance is an `Array`.  You should, however, not manipulate the
 contents directly, or use `slice()` to obtain a subset of plugins (it'll return
-an array, not a Sokkit instance).  Instead, use `subset`, and supply an
-*optional* function to filter that set, which will result in an appropriate
-subset of modules.
+an array, not a Sokkit instance).  Instead, use `subset()`, and supply an
+*optional* function to filter that set, which will result in a `Sokkit` instance
+containing a subset of plugins.
 
 ``` JS
-var group = sokkit.subset(function(module, plugin) {
-	return plugin.isGroupMember || module.indexOf('group_name');
+var group = sokkit.subset(function(name, plugin) {
+	return plugin.isGroupMember || name.indexOf('group_name');
 });
 ```
 
@@ -243,7 +248,7 @@ var errors = sokkit.instantiate(this);
 //	...
 ```
 
-The returned array will contain objects with `module` and `error` properties,
+The returned array will contain objects with `name` and `error` properties,
 listing any plugins that threw exceptions while being instantiated.
 
 ## Enabling and disabling
@@ -251,16 +256,16 @@ listing any plugins that threw exceptions while being instantiated.
 If a plugin misbehaves, or is not required, it can be disabled:
 
 ``` JS
-sokkit.disable(module);
+sokkit.disable(name);
 ```
 
 And later reenabled:
 
 ``` JS
-sokkit.enable(module);
+sokkit.enable(name);
 ```
 
-Diabled plugins will no longer appear in the `sokkit` array, the `modules`
+Diabled plugins will no longer appear in the `sokkit` array, the `plugins`
 property, appear in any `subset`s or be affected by `call`, `apply`, or
 `instantiate`.
 
@@ -281,7 +286,9 @@ Additionally, this method will return the, now familiar, error array describing
 any plugins that have been disabled due to a dependency failure.
 
 ``` JS
-var errors = sokkit.depend(function(module, plugin) { return plugin.requires; });
+var errors = sokkit.depend(function(name, plugin) {
+	return plugin.requires;
+});
 ```
 
 ## So, how does this help me?
@@ -323,7 +330,7 @@ automatically discovered, loaded and ready to use.
 
 Personally, I like to use this as an automatic aggregator for components within
 my own software too - use an array of paths, including some way of picking up
-internal *modules*.
+internal *plugins*.
 
 ``` js
 	function MyAPI() {
