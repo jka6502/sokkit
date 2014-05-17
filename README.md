@@ -187,15 +187,16 @@ transformations occur when a plugin is discovered.
 If the plugin is contained in a single script file, the `.js` extension is
 removed.
 
-If the plugin is discovered in a module called `appname-pluginname` then the
-`appname-` prefix is removed, so an application using the following plugins:
+If the plugin is discovered in a module called `application-pluginname`, or a
+filename `application-plugin` then the `application-` prefix is removed, so an
+application using the following plugins:
 
 ```
-	application-plugin1
-	application-plugin2
+	node_modules/application-plugin1/
+	node_modules/application-plugin2/
 
 	./components/feature1.js
-	./components/feature2.js
+	./components/application-feature2.js
 ```
 
 Will have the following plugins:
