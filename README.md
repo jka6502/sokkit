@@ -126,12 +126,12 @@ var sokkit = new Sokkit({
 
 ## Usage
 
-The `Sokkit` instance is actually an array.  Once `load` has returned *(in
+The `Sokkit` instance is actually an `Array`.  Once `load` has returned *(in
 synchronous mode)*, or the supplied `callback` has been called *(in asynchronous
 mode)*, it will contain the `module.exports` of all plugins found.
 
 From there, you can iterate over the loaded plugins, as you would with any
-other array:
+other `Array`:
 
 ``` JS
 sokkit.forEach(function(plugin) {
