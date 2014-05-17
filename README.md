@@ -8,14 +8,14 @@ Discover, load, instantiate and/or execute methods on all of your plugins with
 ease - Just decide on a suitable file pattern, or use the `mymodule-pluginname`
 default, and away you go!
 
-	* [Installation](#installation)
-	* [Configuration](#configuration)
-	* [Usage](#usage)
-	* [Subsets](#subsets)
-	* [Instanced plugins](#instanced-plugins)
-	* [Enabling and disabling](#enabling-and-disabling)
-	* [Plugin dependency management](#plugin-dependency-management)
-	* [So, how does this help me?](#so-how-does-this-help-me)
+* [Installation](#installation)
+* [Configuration](#configuration)
+* [Usage](#usage)
+* [Subsets](#subsets)
+* [Instanced plugins](#instanced-plugins)
+* [Enabling and disabling](#enabling-and-disabling)
+* [Plugin dependency management](#plugin-dependency-management)
+* [So, how does this help me?](#so-how-does-this-help-me)
 
 ## Installation
 
