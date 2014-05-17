@@ -252,9 +252,9 @@ console.log(listA[0] === listB[0]); // false
 
 ## Instanced plugins
 
-If you prefer modular plugins, the helper function, `instantiate` can be
-used to treat each plugin as a constructor, and instantiate those those objects
-with the parameters supplied.
+If you prefer modular plugins, the helper function, `instantiate` can be used to
+treat each plugin as a constructor, and instantiate those objects with the
+parameters supplied.
 
 ``` JS
 var errors = sokkit.instantiate(this);
