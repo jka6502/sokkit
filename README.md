@@ -276,13 +276,13 @@ If a plugin misbehaves, or is not required, it can be disabled:
 sokkit.disable('bad-plugin');
 ```
 
-And later reenabled:
+And later re-enabled:
 
 ``` JS
 sokkit.enable('good-plugin');
 ```
 
-Diabled plugins will no longer appear in the `sokkit` array, the `plugins`
+Disabled plugins will no longer appear in the `sokkit` array, the `plugins`
 property, appear in any `subset`s or be affected by `call`, `apply`, or
 `instantiate`.
 
@@ -337,7 +337,7 @@ but by specifying plugins as dependencies too, in their `package.json`:
 
 	"dependencies": [
 		"yourmodule": "^0.1.0",
-		"yourmodule-plugin1": "^0.1.0"
+		"yourmodule-plugin1": "^0.1.0",
 		"yourmodule-plugin2": "^0.2.0"
 	]
 }
