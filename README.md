@@ -208,10 +208,11 @@ Will have the following plugins:
 
 ## Subsets
 
-You should, however, not manipulate the contents directly, or use `slice()` to
-obtain a subset of plugins.  Instead, use `subset`, and supply an *optional*
-function to filter that set, which will result in an appropriate subset of
-modules.
+The Sokkit instance is an array.  You should, however, not manipulate the
+contents directly, or use `slice()` to obtain a subset of plugins (it'll return
+and array, not a Sokkit instance).  Instead, use `subset`, and supply an
+*optional* function to filter that set, which will result in an appropriate
+subset of modules.
 
 ``` JS
 var group = sokkit.subset(function(module, plugin) {
