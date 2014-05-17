@@ -22,7 +22,7 @@ default, and away you go!
 Install via [npm](https://www.npmjs.org/), and save it as a dependency for your
 project.
 
-``` bash
+``` Shell
 npm install sokkit --save
 ```
 
@@ -49,7 +49,7 @@ Call the `load()` method to discover, and load any plugins.
 var plugins = sokkit.load();
 ```
 
-Or call it asynchronously, by supplying a callback:
+Or call it *asynchronously*, by supplying a callback:
 
 ``` JS
 sokkit.load(function(error, plugins) {
@@ -57,9 +57,9 @@ sokkit.load(function(error, plugins) {
 });
 ```
 
-Failures to detect plugins, or file system failures throw an `Error` in
-synchronous mode, or pass the `error` parameter to the `callback` supplied in
-asynchronous mode.
+Failures to detect plugins, or file system failures throw an `Error` *(in
+synchronous mode)*, or pass the `error` parameter to the `callback` supplied
+*(in asynchronous mode)*.
 
 Actual plugin load failures, however, populate the `failed` array property with
 objects containing `name` and `error` keys.
@@ -126,9 +126,9 @@ var sokkit = new Sokkit({
 
 ## Usage
 
-The `Sokkit` instance is actually an array.  Once `load` has returned (in
-synchronous mode), or the supplied `callback` has been called (in asynchronous
-mode), it will contain the `module.exports` of all plugins found.
+The `Sokkit` instance is actually an array.  Once `load` has returned *(in
+synchronous mode)*, or the supplied `callback` has been called *(in asynchronous
+mode)*, it will contain the `module.exports` of all plugins found.
 
 From there, you can iterate over the loaded plugins, as you would with any
 other array:
@@ -200,27 +200,27 @@ If the plugin is discovered in a module called `application-pluginname`, or a
 file named `application-plugin.js` then the `application-` prefix is removed, so
 an application using the following plugins:
 
-`
+``` text
 	node_modules/application-plugin1/
 	node_modules/application-plugin2/
 
 	./components/feature1.js
 	./components/application-feature2.js
-`
+```
 
 Will have the following plugins:
-`
+``` text
 	plugin1
 	plugin2
 	feature1
 	feature2
-`
+```
 
 ## Subsets
 
 The `Sokkit` instance is an `Array`.  You should, however, not manipulate the
 contents directly, or use `slice()` to obtain a subset of plugins (it'll return
-an array, not a Sokkit instance).  Instead, use `subset()`, and supply an
+an `Array`, not a `Sokkit` instance).  Instead, use `subset()`, and supply an
 *optional* function to filter that set, which will result in a `Sokkit` instance
 containing a subset of plugins.
 
@@ -232,10 +232,22 @@ var group = sokkit.subset(function(name, plugin) {
 
 Subsets do not retain the `failed` properties of their parents.
 
-Subsets are also independent plugin lists, they reference the same exports, but
-are unique sets in their own right.  This means you can `load` plugins, create
-two subsets, run `instantiate` on each, and maintain two completely independent
-sets of plugin instances.
+Subsets are also independent plugin lists, they reference the same `exports`,
+but are unique sets in their own right.  This means you can `load` plugins,
+create two subsets, run `instantiate` on each, and maintain two completely
+independent sets of plugin instances.
+
+``` JS
+var plugins = new Sokkit().load();
+
+var listA = plugins.subset();
+	listB = plugins.subset();
+
+listA.instantiate();
+listB.instantiate();
+
+console.log(listA[0] === listB[0]); // false
+```
 
 ## Instanced plugins
 
@@ -246,10 +258,10 @@ with the parameters supplied.
 ``` JS
 var errors = sokkit.instantiate(this);
 
-// The equivalent of:
-//	sokkit[0] = new sokkit[0](this);
-//	sokkit[1] = new sokkit[1](this);
-//	...
+// Performs the equivalent of:
+sokkit[0] = new sokkit[0](this);
+sokkit[1] = new sokkit[1](this);
+// ...
 ```
 
 The returned array will contain objects with `name` and `error` properties,
@@ -260,13 +272,13 @@ listing any plugins that threw exceptions while being instantiated.
 If a plugin misbehaves, or is not required, it can be disabled:
 
 ``` JS
-sokkit.disable(name);
+sokkit.disable('bad-plugin');
 ```
 
 And later reenabled:
 
 ``` JS
-sokkit.enable(name);
+sokkit.enable('good-plugin');
 ```
 
 Diabled plugins will no longer appear in the `sokkit` array, the `plugins`
@@ -302,7 +314,7 @@ work with plugins, using whatever actual plugin API you prefer.
 
 This, in turn, means that your users can, for instance:
 
-``` bash
+``` Shell
 npm install yourmodule
 npm install yourmodule-plugin1
 npm install yourmodule-plugin2
@@ -315,7 +327,7 @@ they are loaded/linked correctly.
 Alternatively, developers that depend on your module can do exactly the same,
 but by specifying plugins as dependencies too, in their `package.json`:
 
-``` JS
+``` JSON
 {
 	"name": "superapplication",
 	"version": "0.1.0",
