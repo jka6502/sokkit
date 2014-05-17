@@ -74,9 +74,9 @@ if (sokkit.failed.length) {
 }
 ```
 
-By default Sokkit will search the same `node_modules` directory that your module
-resides in for any other modules named `yourmodule-*`, and attempt to `require`
-them.
+By default `Sokkit` will search the same `node_modules` directory that your
+module resides in for any other modules named `yourmodule-*`, and attempt to
+`require` them.
 
 You can override the search directory by supplying a `path` option:
 
@@ -154,9 +154,10 @@ for(var name in plugins) {
 }
 ```
 
-Sokkit is not opinionated, there is no enforced design on your plugin structure.
-How your plugins interact with your application is left to the developer's
-discretion, but several methods are supplied to assist in those interactions.
+`Sokkit` is not opinionated, there is no enforced design on your plugin
+structure. How your plugins interact with your application is left to the
+developer's discretion, but several methods are supplied to assist in those
+interactions.
 
 The `call` method invokes the `method` supplied on every succesfully loaded
 plugin with the remaining parameters:
