@@ -211,7 +211,7 @@ Will have the following plugins:
 
 The Sokkit instance is an array.  You should, however, not manipulate the
 contents directly, or use `slice()` to obtain a subset of plugins (it'll return
-and array, not a Sokkit instance).  Instead, use `subset`, and supply an
+an array, not a Sokkit instance).  Instead, use `subset`, and supply an
 *optional* function to filter that set, which will result in an appropriate
 subset of modules.
 
