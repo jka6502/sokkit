@@ -101,8 +101,8 @@ var sokkit = new Sokkit({
 });
 ```
 
-Overriding the path automatically overrides the pattern as well (since you may
-well need different patterns for different paths).
+**Note:** Overriding the path automatically overrides the pattern as well (since
+you may well need different patterns for different paths).
 
 If you'd prefer to use the default path, but want a different file matching
 pattern, just supply a [glob](https://github.com/isaacs/node-glob) compatible
