@@ -84,7 +84,7 @@ You can override the search directory by supplying a `path` option:
 var dirname = require('path').dirname;
 
 var sokkit = new Sokkit({
-	path: dirname(require.main.filename) + '/plugins'
+	path: dirname(require.main.filename) + '/plugins/appname-*'
 });
 ```
 
@@ -94,15 +94,19 @@ default by specifying `$DEFAULT` within the array:
 ``` JS
 var sokkit = new Sokkit({
 	path: [
-		dirname(require.main.filename) + '/plugins',
-		dirname(require.main.filename) + '/extras',
+		dirname(require.main.filename) + '/plugins/appname-*',
+		dirname(require.main.filename) + '/extras/*.js',
 		'$DEFAULT'
 	]
 });
 ```
 
-Or override the plugin file naming pattern, by supplying a
-[glob](https://github.com/isaacs/node-glob) compatible pattern.
+Overriding the path automatically overrides the pattern as well (since you may
+well need different patterns for different paths).
+
+If you'd prefer to use the default path, but want a different file matching
+pattern, just supply a [glob](https://github.com/isaacs/node-glob) compatible
+pattern.
 
 ``` JS
 var sokkit = new Sokkit({
