@@ -335,11 +335,11 @@ but by specifying plugins as dependencies too, in their `package.json`:
 	"author": "Bob",
 	"description": "the very best application",
 
-	"dependencies": [
+	"dependencies": {
 		"yourmodule": "^0.1.0",
 		"yourmodule-plugin1": "^0.1.0",
 		"yourmodule-plugin2": "^0.2.0"
-	]
+	}
 }
 ```
 And, when they access your module, the plugins will be available too - all
