@@ -17,7 +17,7 @@
     "plugin"
   ],
   "dependencies": {
-    "glob": "^3.2.9",
+    "glob": "3.x.x",
     "stratum-framework": "^0.1.2"
   },
   "license": "MIT",
@@ -25,8 +25,8 @@
     "node": ">=0.6"
   },
   "devDependencies": {
-    "mocha": "^1.18.2",
-    "rewire": "^2.0.0",
-    "should": "^3.3.1"
+    "mocha": "1.x.x",
+    "rewire": "2.x.x",
+    "should": "3.x.x"
   }
 }
