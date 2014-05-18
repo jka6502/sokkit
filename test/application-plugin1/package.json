@@ -1,0 +1,13 @@
+{
+  "name": "application-plugin1",
+  "preferGlobal": false,
+  "version": "0.1.0",
+  "author": "James Andrews <jka6502@gmail.com>",
+  "description": "A test package",
+  "scripts": {},
+  "main": "test.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.6"
+  }
+}

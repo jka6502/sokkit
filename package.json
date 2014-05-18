@@ -1,10 +1,12 @@
 {
   "name": "sokkit",
   "preferGlobal": false,
-  "version": "0.3.2",
+  "version": "0.4.0",
   "author": "James Andrews <jka6502@gmail.com>",
   "description": "an npm submodule plugin handler",
-  "scripts": {},
+  "scripts": {
+    "test": "node test/all.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/jka6502/sokkit.git"
@@ -21,5 +23,10 @@
   "license": "MIT",
   "engines": {
     "node": ">=0.6"
+  },
+  "devDependencies": {
+    "mocha": "^1.18.2",
+    "rewire": "^2.0.0",
+    "should": "^3.3.1"
   }
 }
