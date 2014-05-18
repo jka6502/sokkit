@@ -1,7 +1,7 @@
 
 # Sokkit
 
-[![Build Status](https://travis-ci.org/jka6502/sokkit.svg?branch=master)](https://travis-ci.org/jka6502/sokkit)[![NPM version](https://badge.fury.io/js/sokkit.svg)](http://badge.fury.io/js/sokkit)
+[![Build Status](https://travis-ci.org/jka6502/sokkit.svg?branch=master)](https://travis-ci.org/jka6502/sokkit) - [![NPM version](https://badge.fury.io/js/sokkit.svg)](http://badge.fury.io/js/sokkit)
 
 > *Its where yer plugins go, innit?*
 
