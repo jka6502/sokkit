@@ -1,7 +1,7 @@
 
 # Sokkit
 
-[![Travis build status](https://travis-ci.org/jka6502/sokkit.svg?branch=master)][badge]
+[![Build Status](https://travis-ci.org/jka6502/sokkit.svg?branch=master)](https://travis-ci.org/jka6502/sokkit)
 
 > *Its where yer plugins go, innit?*
 
