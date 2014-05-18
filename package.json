@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "glob": "3.x.x",
-    "stratum-framework": "^0.1.2"
+    "stratum-framework": "0.1.x"
   },
   "license": "MIT",
   "engines": {
