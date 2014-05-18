@@ -1,9 +1,9 @@
 
 # Sokkit
 
-[![Travis build status](https://travis-ci.org/jka6502/sokkit.svg?branch=master)[badge]
+[![Travis build status](https://travis-ci.org/jka6502/sokkit.svg?branch=master)][badge]
 
-*Its where yer plugins go, innit?*
+> *Its where yer plugins go, innit?*
 
 A simple, unopinionated plugin handler for npm modules.
 
