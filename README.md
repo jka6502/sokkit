@@ -9,6 +9,7 @@ ease - Just decide on a suitable file pattern, or use the `mymodule-pluginname`
 default, and away you go!
 
 * [Installation](#installation)
+* [Testing](#testing)
 * [Configuration](#configuration)
 * [Usage](#usage)
 * [Subsets](#subsets)
@@ -24,6 +25,19 @@ project.
 
 ``` Shell
 npm install sokkit --save
+```
+
+## Testing
+
+Install the dev dependencies:
+``` Shell
+cd node_modules/sokkit/
+npm install
+```
+
+Then, run the included test suite:
+``` Shell
+npm test
 ```
 
 ## Configuration
@@ -61,8 +75,8 @@ Failures to detect plugins, or file system failures throw an `Error` *(in
 synchronous mode)*, or pass the `error` parameter to the `callback` supplied
 *(in asynchronous mode)*.
 
-Actual plugin load failures, however, populate the `failed` array property with
-objects containing `name` and `error` keys.
+Actual plugin load failures, however, populate the `failed` property, an `Array`
+containing plain objects with `name` and `error` properties.
 
 ``` JS
 if (sokkit.failed.length) {
@@ -126,9 +140,11 @@ var sokkit = new Sokkit({
 
 ## Usage
 
-The `Sokkit` instance is actually an `Array`.  Once `load` has returned *(in
-synchronous mode)*, or the supplied `callback` has been called *(in asynchronous
-mode)*, it will contain the `module.exports` of all plugins found.
+The `Sokkit` instance is actually an `Array`, well,
+[sort of](http://perfectionkills.com/how-ecmascript-5-still-does-not-allow-to-subclass-an-array/).
+Once `load` has returned *(in synchronous mode)*, or the supplied `callback` has
+been called *(in asynchronous mode)*, it will contain the `module.exports` from
+each of the plugins discovered, and loaded.
 
 From there, you can iterate over the loaded plugins, as you would with any
 other `Array`:
@@ -142,8 +158,8 @@ sokkit.forEach(function(plugin) {
 Or use `Array` functions, such as `map`, `filter`, `join`, to perform operations
 or aggregate information about your loaded plugins.
 
-If you need access to the actual plugin names, you can use the `plugins`
-property:
+If you need access to the actual plugin names, or want to reference a plugin by
+name, you can use the `plugins` property:
 
 ``` JS
 var plugins = sokkit.plugins;
@@ -219,11 +235,11 @@ Will have the following plugins:
 
 ## Subsets
 
-The `Sokkit` instance is an `Array`.  You should, however, not manipulate the
-contents directly, or use `slice()` to obtain a subset of plugins (it'll return
-an `Array`, not a `Sokkit` instance).  Instead, use `subset()`, and supply an
-*optional* function to filter that set, which will result in a `Sokkit` instance
-containing a subset of plugins.
+Although the `Sokkit` instance is a subclass of `Array`, you can not manipulate
+the contents directly, or use `slice()` to obtain a subset of plugins (it will
+return an `Array`, not a `Sokkit` instance).  Instead, use `subset()`, and
+supply an *optional* function to filter that set, which will result in a
+`Sokkit` instance containing the required subset of plugins.
 
 ``` JS
 var group = sokkit.subset(function(name, plugin) {
