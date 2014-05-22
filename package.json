@@ -1,9 +1,9 @@
 {
   "name": "sokkit",
   "preferGlobal": false,
-  "version": "0.4.2",
+  "version": "0.4.4",
   "author": "James Andrews <jka6502@gmail.com>",
-  "description": "an npm submodule plugin handler",
+  "description": "an npm module based plugin handler",
   "scripts": {
     "test": "node test/all.js"
   },
