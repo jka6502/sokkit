@@ -1,7 +1,7 @@
 {
   "name": "sokkit",
   "preferGlobal": false,
-  "version": "0.4.4",
+  "version": "0.4.6",
   "author": "James Andrews <jka6502@gmail.com>",
   "description": "an npm module based plugin handler",
   "scripts": {
@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "glob": "3.x.x",
-    "stratum-framework": "0.1.x"
+    "stratum-framework": "0.5.x"
   },
   "license": "MIT",
   "engines": {
